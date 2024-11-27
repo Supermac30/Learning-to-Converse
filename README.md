@@ -19,3 +19,6 @@ p \propto \exp\left(\text{eta} \cdot \sqrt{\frac{\log(k)}{nk}}\right)
 $$
 
 where eta is set in the config.
+
+ETC will go through the arms in order until one gives a reward of 1, then commit to it. Once this
+arm no longer gives a reward of 1, the next arm is tried.
