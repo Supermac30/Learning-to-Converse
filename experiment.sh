@@ -20,7 +20,7 @@ n_messages=3
 utility_name=equality
 prior_name=gaussian
 
-for threshold in 0 0.01 0.1 1
+for threshold in 0.001 0.01 0.1
 do
     python3 main.py \
         hydra.run.dir=$directory \
@@ -47,6 +47,18 @@ do
         threshold=$threshold \
         receiver_name=ucb \
         delta_exponent=2
+    
+     python3 main.py \
+        hydra.run.dir=$directory \
+        hydra.job.chdir=True \
+        n_rounds=$n_rounds \
+        n_states=$n_states \
+        n_messages=$n_messages \
+        utility_name=$utility_name \
+        prior_name=$prior_name \
+        sender_name=threshold \
+        threshold=$threshold \
+        receiver_name=etc
 done
 
 python3 plot.py \

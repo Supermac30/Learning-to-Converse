@@ -1,6 +1,6 @@
 import numpy as np
 from LearningToConverse.sender import ThresholdSender
-from LearningToConverse.receiver import Exp3, UCB
+from LearningToConverse.receiver import Exp3, UCB, ETC
 
 def build_prior(cfg):
     if cfg.prior_name == "uniform":
@@ -50,6 +50,8 @@ def build_receiver(cfg):
         receiver = Exp3(cfg.n_states, cfg.n_messages, cfg.n_states, cfg.eta)
     elif cfg.receiver_name == "ucb":
         receiver = UCB(cfg.n_states, cfg.n_messages, cfg.n_states, cfg.delta_exponent)
+    elif cfg.receiver_name == "etc":
+        receiver = ETC(cfg.n_states, cfg.n_messages)
     else:
         raise ValueError("Invalid receiver name.")
     

@@ -69,3 +69,31 @@ class UCB(Receiver):
         """
         self.times_seen[action, message] += 1
         self.mean_rewards[action, message] += (reward - self.mean_rewards[action, message]) / self.times_seen[action, message]
+
+
+class ETC(Receiver):
+    def __init__(self, n_states, n_messages):
+        """The receiver that explores for a certain number of rounds and then commits to the best action.
+        When this action is no longer the best, it will explore again.
+        """
+        super().__init__(n_states, n_messages)
+        self.name = f"ETC"
+        self.committed_action = {message: None for message in range(n_messages)}
+        self.index_checked = {message: 0 for message in range(n_messages)}
+
+    def play_action(self, message):
+        if self.committed_action[message] is not None:
+            return self.committed_action[message]
+        else:
+            return self.index_checked[message]
+    
+    def update(self, action, message, reward):
+        if self.committed_action[message] is None:
+            if reward == 1:
+                self.committed_action[message] = action
+            else:
+                self.index_checked[message] += 1
+                self.index_checked[message] %= self.n_states
+        elif reward != 1:
+            self.committed_action[message] = None
+            self.index_checked[message] = 0
