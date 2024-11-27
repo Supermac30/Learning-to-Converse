@@ -96,4 +96,5 @@ class ETC(Receiver):
                 self.index_checked[message] %= self.n_states
         elif reward != 1:
             self.committed_action[message] = None
-            self.index_checked[message] = 0
+            self.index_checked[message] += 1
+            self.index_checked[message] %= self.n_states
