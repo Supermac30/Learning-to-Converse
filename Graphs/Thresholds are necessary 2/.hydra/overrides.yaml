@@ -1,0 +1,4 @@
+- n_simulations=100
+- n_messages=10
+- n_states=10
+- prior_name=uniform
