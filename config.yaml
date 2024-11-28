@@ -16,3 +16,6 @@ delta_exponent: 1
 
 # For the Exp3 receiver
 eta: 1.1
+
+# For the epsilon-greedy receiver
+epsilon: 0.1

@@ -95,3 +95,32 @@ class ETC(Receiver):
                 self.committed_action[message] = None
         else:
             self.committed_action[message] = action
+
+
+class Greedy(Receiver):
+    def __init__(self, n_states, n_messages, epsilon):
+        """The receiver that plays the action that has the highest expected reward.
+        """
+        super().__init__(n_states, n_messages)
+        self.name = f"Greedy"
+        self.total_reward = np.zeros((n_states, n_messages))
+        self.times_seen = np.zeros((n_states, n_messages))
+        self.epsilon = epsilon
+
+    def play_action(self, message):
+        """Play the action that maximizes the expected reward.
+        """
+        if np.random.rand() < self.epsilon:
+            return np.random.choice(self.n_states)
+        total_reward = self.total_reward[:, message]
+        times_seen = self.times_seen[:, message]
+        with np.errstate(divide='ignore', invalid='ignore'):
+            expected_reward = total_reward / times_seen
+            expected_reward[times_seen == 0] = np.inf
+        return np.argmax(expected_reward)
+    
+    def update(self, action, message, reward):
+        """Update the total reward and the times seen of the receiver.
+        """
+        self.total_reward[action, message] += reward
+        self.times_seen[action, message] += 1

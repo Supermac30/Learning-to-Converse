@@ -1,11 +1,10 @@
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH -p cpu
 #SBATCH --cpus-per-task=1
 #SBATCH --tasks-per-node=1
 #SBATCH --time=00:10:00
 #SBATCH --mem=1GB
-#SBATCH --job-name=exponential_weights
+#SBATCH --job-name=bandit
 #SBATCH --output=slurm/logs/%x_%j.out
 #SBATCH --error=slurm/errors/%x_%j.err
 
@@ -18,9 +17,11 @@ n_states=10
 n_messages=3
 
 utility_name=equality
-prior_name=gaussian
+prior_name=uniform
 
-for threshold in 0.001 0.01 0.1
+source .venv/bin/activate
+
+for threshold in 0.001
 do
     python3 main.py \
         hydra.run.dir=$directory \
@@ -48,7 +49,7 @@ do
         receiver_name=ucb \
         delta_exponent=2
     
-     python3 main.py \
+    python3 main.py \
         hydra.run.dir=$directory \
         hydra.job.chdir=True \
         n_rounds=$n_rounds \
@@ -59,6 +60,19 @@ do
         sender_name=threshold \
         threshold=$threshold \
         receiver_name=etc
+    
+    python3 main.py \
+        hydra.run.dir=$directory \
+        hydra.job.chdir=True \
+        n_rounds=$n_rounds \
+        n_states=$n_states \
+        n_messages=$n_messages \
+        utility_name=$utility_name \
+        prior_name=$prior_name \
+        sender_name=threshold \
+        threshold=$threshold \
+        receiver_name=greedy \
+        epsilon=0.01
 done
 
 python3 plot.py \
