@@ -17,7 +17,7 @@ n_states=10
 n_messages=3
 
 utility_name=equality
-prior_name=uniform
+prior_name=skewed
 
 seed=$RANDOM
 

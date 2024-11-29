@@ -1,0 +1,13 @@
+seed: 42
+n_simulations: 100
+n_rounds: 1000
+n_states: 10
+n_messages: 3
+prior_name: gaussian
+utility_name: equality
+sender_name: threshold
+receiver_name: exp3
+threshold: 0.1
+delta_exponent: 1
+eta: 1.1
+epsilon: 0.1
