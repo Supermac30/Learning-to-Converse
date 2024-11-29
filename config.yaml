@@ -1,3 +1,4 @@
+seed: 42
 n_simulations: 5
 n_rounds: 1000
 n_states: 3

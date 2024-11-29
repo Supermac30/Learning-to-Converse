@@ -19,6 +19,8 @@ n_messages=3
 utility_name=equality
 prior_name=uniform
 
+seed=$RANDOM
+
 source .venv/bin/activate
 
 for threshold in 0.001
@@ -26,6 +28,7 @@ do
     python3 main.py \
         hydra.run.dir=$directory \
         hydra.job.chdir=True \
+        seed=$seed \
         n_rounds=$n_rounds \
         n_states=$n_states \
         n_messages=$n_messages \
@@ -39,6 +42,7 @@ do
     python3 main.py \
         hydra.run.dir=$directory \
         hydra.job.chdir=True \
+        seed=$seed \
         n_rounds=$n_rounds \
         n_states=$n_states \
         n_messages=$n_messages \
@@ -52,6 +56,7 @@ do
     python3 main.py \
         hydra.run.dir=$directory \
         hydra.job.chdir=True \
+        seed=$seed \
         n_rounds=$n_rounds \
         n_states=$n_states \
         n_messages=$n_messages \
@@ -64,6 +69,7 @@ do
     python3 main.py \
         hydra.run.dir=$directory \
         hydra.job.chdir=True \
+        seed=$seed \
         n_rounds=$n_rounds \
         n_states=$n_states \
         n_messages=$n_messages \

@@ -2,9 +2,12 @@ import hydra
 
 from LearningToConverse.utils import build_prior, build_utility, build_sender, build_receiver
 from LearningToConverse.environment import Environment
+import numpy as np
 
 @hydra.main(version_base=None, config_path=".", config_name="config")
 def main(cfg):
+    np.random.seed(cfg.seed)
+
     # Initialize the sender & receiver
     sender = build_sender(cfg)
     receiver = build_receiver(cfg)
